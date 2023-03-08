@@ -10,14 +10,34 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:vscode-ghs.helloWorld"
+    "onStartupFinished",
+    "onDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
+    "problemMatchers": [
       {
-        "command": "vscode-ghs.helloWorld",
-        "title": "Hello World"
+        "base": "$gcc",
+        "owner": "GHS",
+        "label": "GHS",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}/build/${command:cmake.activeConfigurePresetName}"
+        ],
+        "applyTo": "allDocuments",
+        "pattern": [
+          {
+            "regexp": "^.*\"(.*)\",\\s+line\\s+(\\d+):\\s+(.*)\\s(.*):",
+            "file": 1,
+            "line": 2,
+            "severity": 3,
+            "code": 4
+          },
+          {
+            "regexp": "^\\s+(.*)$",
+            "message": 1
+          }
+        ]
       }
     ]
   },
